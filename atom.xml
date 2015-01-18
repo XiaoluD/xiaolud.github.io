@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Being-towards-death]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.xiaolud.com/"/>
-  <updated>2015-01-18T17:50:10.012Z</updated>
+  <updated>2015-01-18T17:52:05.286Z</updated>
   <id>http://blog.xiaolud.com/</id>
   
   <author>
@@ -13,6 +13,110 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[test8]]></title>
+    <link href="http://blog.xiaolud.com/2015/01/19/test8/"/>
+    <id>http://blog.xiaolud.com/2015/01/19/test8/</id>
+    <published>2015-01-18T17:51:58.000Z</published>
+    <updated>2015-01-18T17:51:58.000Z</updated>
+    <content type="html"><![CDATA[]]></content>
+    <summary type="html">
+    <![CDATA[]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[test7]]></title>
+    <link href="http://blog.xiaolud.com/2015/01/19/test7/"/>
+    <id>http://blog.xiaolud.com/2015/01/19/test7/</id>
+    <published>2015-01-18T17:51:54.000Z</published>
+    <updated>2015-01-18T17:51:54.000Z</updated>
+    <content type="html"><![CDATA[]]></content>
+    <summary type="html">
+    <![CDATA[]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[test6]]></title>
+    <link href="http://blog.xiaolud.com/2015/01/19/test6/"/>
+    <id>http://blog.xiaolud.com/2015/01/19/test6/</id>
+    <published>2015-01-18T17:51:51.000Z</published>
+    <updated>2015-01-18T17:51:51.000Z</updated>
+    <content type="html"><![CDATA[]]></content>
+    <summary type="html">
+    <![CDATA[]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[test5]]></title>
+    <link href="http://blog.xiaolud.com/2015/01/19/test5/"/>
+    <id>http://blog.xiaolud.com/2015/01/19/test5/</id>
+    <published>2015-01-18T17:51:48.000Z</published>
+    <updated>2015-01-18T17:51:48.000Z</updated>
+    <content type="html"><![CDATA[]]></content>
+    <summary type="html">
+    <![CDATA[]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[test]]></title>
+    <link href="http://blog.xiaolud.com/2015/01/19/test/"/>
+    <id>http://blog.xiaolud.com/2015/01/19/test/</id>
+    <published>2015-01-18T17:51:45.000Z</published>
+    <updated>2015-01-18T17:51:45.000Z</updated>
+    <content type="html"><![CDATA[]]></content>
+    <summary type="html">
+    <![CDATA[]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[test4]]></title>
+    <link href="http://blog.xiaolud.com/2015/01/19/test4/"/>
+    <id>http://blog.xiaolud.com/2015/01/19/test4/</id>
+    <published>2015-01-18T17:51:42.000Z</published>
+    <updated>2015-01-18T17:51:42.000Z</updated>
+    <content type="html"><![CDATA[]]></content>
+    <summary type="html">
+    <![CDATA[]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[test3]]></title>
+    <link href="http://blog.xiaolud.com/2015/01/19/test3/"/>
+    <id>http://blog.xiaolud.com/2015/01/19/test3/</id>
+    <published>2015-01-18T17:51:39.000Z</published>
+    <updated>2015-01-18T17:51:39.000Z</updated>
+    <content type="html"><![CDATA[]]></content>
+    <summary type="html">
+    <![CDATA[]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[test2]]></title>
+    <link href="http://blog.xiaolud.com/2015/01/19/test2/"/>
+    <id>http://blog.xiaolud.com/2015/01/19/test2/</id>
+    <published>2015-01-18T17:51:35.000Z</published>
+    <updated>2015-01-18T17:51:35.000Z</updated>
+    <content type="html"><![CDATA[]]></content>
+    <summary type="html">
+    <![CDATA[]]>
+    </summary>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[test_blog]]></title>
