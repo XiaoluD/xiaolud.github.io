@@ -65,39 +65,56 @@
 </header>
 
       <div class="outer">
-        <section id="main"><% if (pagination == 2){ %>
-  <% page.posts.each(function(post){ %>
-    <%- partial('article', {post: post, index: true}) %>
-  <% }) %>
-  <% if (page.total > 1){ %>
-    <nav id="page-nav">
-      <%- paginator({
-        prev_text: '&laquo; Prev',
-        next_text: 'Next &raquo;'
-      }) %>
-    </nav>
-  <% } %>
-<% } else { %>
-  <% var last; %>
-  <% page.posts.each(function(post, i){ %>
-    <% var year = post.date.year(); %>
-    <% if (last != year){ %>
-      <% if (last != null){ %>
-        </div></section>
-      <% } %>
-      <% last = year; %>
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="<%- url_for('archives/' + year) %>" class="archive-year"><%= year %></a>
-        </div>
-        <div class="archives">
-    <% } %>
-    <%- partial('archive-post', {post: post, even: i % 2 == 0}) %>
-  <% }) %>
-  <% if (page.posts.length){ %>
-    </div></section>
-  <% } %>
-<% } %></section>
+        <section id="main">
+  
+    <article id="post-test-blog" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/01/19/test-blog/" class="article-date">
+  <time datetime="2015-01-18T16:13:11.000Z" itemprop="datePublished">Jan 19 2015</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/blog/">blog</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/19/test-blog/">test_blog</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>代码测试</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    os.environ.setdefault(<span class="string">"DJANGO_SETTINGS_MODULE"</span>, <span class="string">"blog.settings"</span>)</div><div class="line"></div><div class="line">    <span class="keyword">from</span> django.core.management <span class="keyword">import</span> execute_from_command_line</div><div class="line"></div><div class="line">    execute_from_command_line(sys.argv)</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a href="http://blog.xiaolud.com/2015/01/19/test-blog/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/blog/">blog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/测试/">测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+  
+
+</section>
         
       </div>
     </div>

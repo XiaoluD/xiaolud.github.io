@@ -65,39 +65,56 @@
 </header>
 
       <div class="outer">
-        <section id="main"><% if (pagination == 2){ %>
-  <% page.posts.each(function(post){ %>
-    <%- partial('article', {post: post, index: true}) %>
-  <% }) %>
-  <% if (page.total > 1){ %>
-    <nav id="page-nav">
-      <%- paginator({
-        prev_text: '&laquo; Prev',
-        next_text: 'Next &raquo;'
-      }) %>
-    </nav>
-  <% } %>
-<% } else { %>
-  <% var last; %>
-  <% page.posts.each(function(post, i){ %>
-    <% var year = post.date.year(); %>
-    <% if (last != year){ %>
-      <% if (last != null){ %>
-        </div></section>
-      <% } %>
-      <% last = year; %>
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="<%- url_for('archives/' + year) %>" class="archive-year"><%= year %></a>
-        </div>
-        <div class="archives">
-    <% } %>
-    <%- partial('archive-post', {post: post, even: i % 2 == 0}) %>
-  <% }) %>
-  <% if (page.posts.length){ %>
-    </div></section>
-  <% } %>
-<% } %></section>
+        <section id="main">
+  
+    <article id="post-my-new-post" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/01/18/my-new-post/" class="article-date">
+  <time datetime="2015-01-18T14:03:26.000Z" itemprop="datePublished">Jan 18 2015</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/blog/">blog</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/18/my-new-post/">my new post</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>blog测试</p>
+<p>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试<br>blog测试</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a href="http://blog.xiaolud.com/2015/01/18/my-new-post/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/博客/">博客</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/测试/">测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+  
+
+</section>
         
       </div>
     </div>
