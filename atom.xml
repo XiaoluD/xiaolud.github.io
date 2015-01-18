@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Being-towards-death]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.xiaolud.com/"/>
-  <updated>2015-01-18T16:20:20.800Z</updated>
+  <updated>2015-01-18T17:11:59.813Z</updated>
   <id>http://blog.xiaolud.com/</id>
   
   <author>
@@ -19,20 +19,13 @@
     <link href="http://blog.xiaolud.com/2015/01/19/test-blog/"/>
     <id>http://blog.xiaolud.com/2015/01/19/test-blog/</id>
     <published>2015-01-18T16:13:11.000Z</published>
-    <updated>2015-01-18T16:16:16.000Z</updated>
+    <updated>2015-01-18T16:51:49.000Z</updated>
     <content type="html"><![CDATA[<p>代码测试</p>
-<h1 id="!/usr/bin/env_python">!/usr/bin/env python</h1>
-<p>import os<br>import sys</p>
-<p>if <strong>name</strong> == “<strong>main</strong>“:<br>    os.environ.setdefault(“DJANGO_SETTINGS_MODULE”, “blog.settings”)</p>
-<pre><code><span class="keyword">from</span> django.core.management <span class="keyword">import</span> execute_from_command_line
-
-execute_from_command_line(sys.argv)
-</code></pre>]]></content>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    os.environ.setdefault(<span class="string">"DJANGO_SETTINGS_MODULE"</span>, <span class="string">"blog.settings"</span>)</div><div class="line"></div><div class="line">    <span class="keyword">from</span> django.core.management <span class="keyword">import</span> execute_from_command_line</div><div class="line"></div><div class="line">    execute_from_command_line(sys.argv)</div></pre></td></tr></table></figure>
+]]></content>
     <summary type="html">
     <![CDATA[<p>代码测试</p>
-<h1 id="!/usr/bin/env_python">!/usr/bin/env python</h1>
-<p>import os<br>import sys</p>
-<p>if <strong>name</strong> == “<strong>m]]>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class]]>
     </summary>
     
       <category term="blog" scheme="http://blog.xiaolud.com/tags/blog/"/>
