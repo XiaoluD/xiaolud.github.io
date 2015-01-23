@@ -17,7 +17,7 @@ Linux (Ubuntu, Debian): sudo apt-get install git-core
 Linux (Fe">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo搭建blog__总结归档">
-<meta property="og:url" content="http://blog.xiaolud.com/2015/01/19/Hexo搭建blog_总结/">
+<meta property="og:url" content="http://blog.xiaolud.com/2015/01/19/Hexo_blog/">
 <meta property="og:site_name" content="Sean's blog">
 <meta property="og:description" content="经过一段时间的折腾,总算搭建起来了Hexo的blog.学习hexo搭建静态博客中遇到些许问题,总结下来,以供后续翻看.
 
@@ -29,7 +29,6 @@ Git安装
 Mac: brew install git
 Linux (Ubuntu, Debian): sudo apt-get install git-core
 Linux (Fe">
-<meta property="og:image" content="http://7u2i0z.com1.z0.glb.clouddn.com/2015_01_dnspod.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo搭建blog__总结归档">
 <meta name="twitter:description" content="经过一段时间的折腾,总算搭建起来了Hexo的blog.学习hexo搭建静态博客中遇到些许问题,总结下来,以供后续翻看.
@@ -43,6 +42,8 @@ Mac: brew install git
 Linux (Ubuntu, Debian): sudo apt-get install git-core
 Linux (Fe">
 
+  
+    <link rel="alternative" href="/atom.xml" title="Sean&#39;s blog" type="application/atom+xml">
   
   
     <link rel="icon" href="/image/favicon.ico">
@@ -81,8 +82,8 @@ Linux (Fe">
         
           <li><a href="/about"><i class="fa fa-user icon-setting"></i></a></li>
         
-          <li><a href="/atom.xml"><i class="fa undefined icon-setting"></i></a></li>
         
+          <li><a href="/atom.xml"><i class="fa fa-rss %> icon-setting"></i></a></li>
         
         </ul>
       </nav>
@@ -91,9 +92,9 @@ Linux (Fe">
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-Hexo搭建blog_总结" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-Hexo_blog" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/01/19/Hexo搭建blog_总结/" class="article-date">
+    <a href="/2015/01/19/Hexo_blog/" class="article-date">
   <time datetime="2015-01-18T18:02:32.000Z" itemprop="datePublished">Jan 19 2015</time>
 </a>
     
@@ -169,7 +170,7 @@ Windows: Download &amp; <span class="keyword">install</span> msysgit.</span>
 hexo deploy     <span class="comment">#将刚才新生成的站点同步到Github上</span>
 </code></pre><h3 id="绑定自定义域名">绑定自定义域名</h3>
 <p>购买域名:推荐使用Godaddy.全球最大的域名提供商,关键是它还支持支付宝.详情略.<br>配置DNS,这里以dnspod为例,详情如图:</p>
-<p><img src="http://7u2i0z.com1.z0.glb.clouddn.com/2015_01_dnspod.png" alt="Dnspod_cname_setting" title="Dnspod_cname_setting"></p>
+<p>![Dnspod_cname_setting] (<a href="http://7u2i0z.com1.z0.glb.clouddn.com/2015_01_dnspod.png" target="_blank" rel="external">http://7u2i0z.com1.z0.glb.clouddn.com/2015_01_dnspod.png</a> “Dnspod_cname_setting”)</p>
 <p>设置CNAME,玩过Github Page的应该知道,只需要手动在yourname.github.io根页面下新建一个CNAME的文件.这里很重要,因为静态网站更新是全站整体更新的.如果手动添加的会在更新时被删除掉,导致配置失效.<br>在这里,我们需要在<strong>./.source/</strong>目录下手动新建一个<strong>CNAME</strong>文件,写入指定的域名.</p>
 <pre><code>blog.xiaolud.<span class="keyword">com</span>    #如上图,我们这里填入&lt;blog.xiaolud.<span class="keyword">com</span>&gt;即可.
 </code></pre><p>稍等片刻,我们就能够通过指定的域名访问我们的blog了.<br>到此,我们就完成了blog的搭建,并学习了如何写一篇blog,新建一个新的页面.下一节将介绍一些基础的配置,主题的更换以及评论的开启.</p>
@@ -216,13 +217,14 @@ description: Sean'</span>s walk step <span class="keyword">by</span> step<span c
 <p>更新主题</p>
 <pre><code><span class="built_in">cd</span> themes/alberta
 git pull
-</code></pre><p>至此,我们就基本上完成了Hexo的一些常用配置,还有其他方面的需求,请参考.<br><a href="http://hexo.io/docs/,&#39;HEXO 官方DOCS&#39;" target="_blank" rel="external">HEXO 官方DOCS</a><br><a href="http://ibruce.info/2013/11/22/hexo-your-blog/&#39;Hexo你的博客&#39;" target="_blank" rel="external">Hexo你的博客</a><br><a href="http://zhaofei.tk/2014/11/30/jekyll_to_hexo/,&#39;更换博客系统——从jekyll到hexo&#39;" target="_blank" rel="external">更换博客系统——从jekyll到hexo</a></p>
+</code></pre><p>至此,我们就基本上完成了Hexo的一些常用配置,还有其他方面的需求,请参考.</p>
+<p><a href="http://hexo.io/docs/,&#39;HEXO 官方DOCS&#39;" target="_blank" rel="external">Hexo 官方DOCS</a><br><a href="http://ibruce.info/2013/11/22/hexo-your-blog/&#39;Hexo你的博客&#39;" target="_blank" rel="external">Hexo你的博客</a><br><a href="http://zhaofei.tk/2014/11/30/jekyll_to_hexo/,&#39;更换博客系统——从jekyll到hexo&#39;" target="_blank" rel="external">更换博客系统——从jekyll到hexo</a></p>
 
       
     </div>
     <footer class="article-footer">
       
-        <a href="http://blog.xiaolud.com/2015/01/19/Hexo搭建blog_总结/#disqus_thread" class="article-comment-link">Comments</a>
+        <a href="http://blog.xiaolud.com/2015/01/19/Hexo_blog/#disqus_thread" class="article-comment-link">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/blog/">blog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
@@ -231,16 +233,6 @@ git pull
   </div>
   
     
-<nav id="article-nav">
-  
-  
-    <a href="/2015/01/18/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World</div>
-    </a>
-  
-</nav>
-
   
 </article>
 
@@ -260,7 +252,7 @@ git pull
 <script>
   var disqus_shortname = 'xiaolud';
   
-  var disqus_url = 'http://blog.xiaolud.com/2015/01/19/Hexo搭建blog_总结/';
+  var disqus_url = 'http://blog.xiaolud.com/2015/01/19/Hexo_blog/';
   
   (function(){
     var dsq = document.createElement('script');
