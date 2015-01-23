@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Python爬虫基础2--urllib2 | Sean&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="上一节我们讲解如何抓取网页和下载图片,在下一节里面我们会讲解如何抓取有限制抓取的网站首先,我们依然用我们上一节课的方法去抓取一个大家都用来举例的网站,本文主要分以下几个部分:
+
+1.抓取受限网页2.对代码进行一些优化
+
+1.抓取受限网页
+首先使用我们上一节学到的知识测试一下:
+'''
+@本程序用来抓取blog.csdn.net网页
+'''
+import urllib
+
+url = 'http://">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python爬虫基础2--urllib2">
+<meta property="og:url" content="http://blog.xiaolud.com/2015/01/23/spider-2nd/">
+<meta property="og:site_name" content="Sean's blog">
+<meta property="og:description" content="上一节我们讲解如何抓取网页和下载图片,在下一节里面我们会讲解如何抓取有限制抓取的网站首先,我们依然用我们上一节课的方法去抓取一个大家都用来举例的网站,本文主要分以下几个部分:
+
+1.抓取受限网页2.对代码进行一些优化
+
+1.抓取受限网页
+首先使用我们上一节学到的知识测试一下:
+'''
+@本程序用来抓取blog.csdn.net网页
+'''
+import urllib
+
+url = 'http://">
+<meta property="og:image" content="http://7u2i0z.com1.z0.glb.clouddn.com/2015_01_splider_header_request_2nd.gif">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python爬虫基础2--urllib2">
+<meta name="twitter:description" content="上一节我们讲解如何抓取网页和下载图片,在下一节里面我们会讲解如何抓取有限制抓取的网站首先,我们依然用我们上一节课的方法去抓取一个大家都用来举例的网站,本文主要分以下几个部分:
+
+1.抓取受限网页2.对代码进行一些优化
+
+1.抓取受限网页
+首先使用我们上一节学到的知识测试一下:
+'''
+@本程序用来抓取blog.csdn.net网页
+'''
+import urllib
+
+url = 'http://">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Sean&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/image/favicon.ico">
+  
+  <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link href="//libs.useso.com/js/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Sean&#39;s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Being-towards-death</a>
+        </h2>
+      
+    </div>
+    <div id="header-menu">
+      <nav id="main-nav">
+        <ul>
+        
+          <li><a href="/"><i class="fa fa-home icon-setting"></i></a></li>
+        
+          <li><a href="/archives"><i class="fa fa-archive icon-setting"></i></a></li>
+        
+          <li><a href="/about"><i class="fa fa-user icon-setting"></i></a></li>
+        
+        
+          <li><a href="/atom.xml"><i class="fa fa-rss %> icon-setting"></i></a></li>
+        
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-spider-2nd" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/01/23/spider-2nd/" class="article-date">
+  <time datetime="2015-01-23T12:14:48.000Z" itemprop="datePublished">Jan 23 2015</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Python爬虫基础2--urllib2
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>上一节我们讲解如何抓取网页和下载图片,在下一节里面我们会讲解如何抓取有限制抓取的网站<br>首先,我们依然用我们上一节课的方法去抓取一个大家都用来举例的网站<blog.cndn.net>,本文主要分以下几个部分:</blog.cndn.net></p>
+<blockquote>
+<p>1.抓取受限网页<br>2.对代码进行一些优化</p>
+</blockquote>
+<h1 id="1-抓取受限网页">1.抓取受限网页</h1>
+<p>首先使用我们上一节学到的知识测试一下:</p>
+<pre><code><span class="horizontal_rule">'''</span>
+@本程序用来抓取blog.csdn.net网页
+<span class="horizontal_rule">'''</span>
+import urllib
+
+url = "http://blog.csdn.net/FansUnion"
+html = urllib.urlopen(url)
+#getcode()方法为返回Http状态码
+print html.getcode()
+html.close()
+#输出
+403
+</code></pre><p>此处我们的输出为403,代表拒绝访问;同理200表示请求成功完成;404表示网址未找到.<br>可见csdn已做了相关屏蔽,通过第一节的方法是无法获取网页,在这里我们需要启动一个新的库:<strong>urllib2</strong><br>但是我们也看到浏览器可以发那个文,是不是我们模拟浏览器操作,就可以获取网页信息.<br>老办法,我们先来看看浏览器是如何提交请求给csdn服务器的.首先简述一下方法:</p>
+<blockquote>
+<p>打开网页,右键点击,选择”inspect Element”(最下面这一项)<br>点击下面弹起来的框框的<strong>Network</strong>选项卡<br>刷新网页,就可以看到<strong>Network</strong>选项卡抓取了很多信息<br>找到其中一个信息展开,就能看到请求包的Header</p>
+</blockquote>
+<p><img src="http://7u2i0z.com1.z0.glb.clouddn.com/2015_01_splider_header_request_2nd.gif" alt="header信息查看" title="header信息查看"></p>
+<p><strong>以下就是整理后的Header信息</strong></p>
+<pre><code>Request <span class="function"><span class="keyword">Method</span>:</span>GET
+Host:blog.csdn.net
+Referer:http:<span class="comment">//blog.csdn.net/?ref=toolbar_logo</span>
+User-Agent:Mozilla/<span class="number">5.0</span> (Macintosh; Intel Mac OS X <span class="number">10</span>_10_1) AppleWebKit/<span class="number">537.36</span> (KHTML, like Gecko) Chrome/<span class="number">38.0</span>.<span class="number">2125.104</span> Safari/<span class="number">537.36</span>
+</code></pre><p>然后根据提取的Header信息,利用urllib2的Request方法模拟浏览器向服务器提交请求,代码如下:</p>
+<pre><code><span class="comment"># coding=utf-8</span>
+<span class="string">'''
+@本程序用来抓取受限网页(blog.csdn.net)
+@User-Agent:客户端浏览器版本
+@Host:服务器地址
+@Referer:跳转地址
+@GET:请求方法为GET
+'''</span>
+<span class="keyword">import</span> urllib2
+
+url = <span class="string">"http://blog.csdn.net/FansUnion"</span>
+
+<span class="comment">#定制自定义Header,模拟浏览器向服务器提交请求</span>
+req = urllib2.Request(url)
+req.add_header(<span class="string">'User-Agent'</span>, <span class="string">'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'</span>)
+req.add_header(<span class="string">'Host'</span>, <span class="string">'blog.csdn.net'</span>)
+req.add_header(<span class="string">'Referer'</span>, <span class="string">'http://blog.csdn.net'</span>)
+req.add_header(<span class="string">'GET'</span>, url)
+
+<span class="comment">#下载网页html并打印</span>
+html = urllib2.urlopen(req)
+content = html.read()
+<span class="keyword">print</span> content
+html.close()
+</code></pre><p>呵呵,你限制我,我就跳过你的限制.据说只要浏览器能够访问的,就能够通过爬虫抓取.</p>
+<h1 id="2-对代码进行一些优化">2.对代码进行一些优化</h1>
+<h3 id="简化提交Header方法">简化提交Header方法</h3>
+<p>发现每次写那么多req.add_header对自己来说是一种折磨,有没有什么方法可以只要复制过来就使用.答案是肯定的.</p>
+<pre><code><span class="variable">#input</span>:
+help(urllib2<span class="built_in">.</span>Request)
+<span class="variable">#output</span>(因篇幅关系,只取__init__方法)
+__init__(<span class="built_in">self</span>, url, <span class="built_in">data</span><span class="subst">=</span><span class="literal">None</span>, headers<span class="subst">=</span>{}, origin_req_host<span class="subst">=</span><span class="literal">None</span>, unverifiable<span class="subst">=</span><span class="literal">False</span>)
+</code></pre><p>通过观察,我们发现headers={},就是说可以以字典的方式提交header信息.那就动手试试咯!!</p>
+<pre><code><span class="comment">#只取自定义Header部分代码</span>
+<span class="variable">csdn_headers =</span> {
+    <span class="string">"User-Agent"</span>: <span class="string">"Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36"</span>,
+    <span class="string">"Host"</span>: <span class="string">"blog.csdn.net"</span>,
+    'Referer': 'http://blog.csdn.net',
+    <span class="string">"GET"</span>: url
+    }
+<span class="variable">req =</span> urllib2.Request(url,<span class="variable">headers=</span>csdn_headers)
+</code></pre><p>发现是不是很简单,在这里感谢斯巴达的无私赐教.</p>
+<h3 id="提供动态头部信息">提供动态头部信息</h3>
+<p>如果按照上述方法进行抓取,很多时候会因为提交信息过于单一,被服务器认为是机器爬虫进行拒绝.<br>那我们是不是有一些更为智能的方法提交一些动态的数据,答案肯定也是肯定的.而且很简单,直接上代码!</p>
+<pre><code><span class="string">'''
+@本程序是用来动态提交Header信息
+@random 动态库,详情请参考&lt;https://docs.python.org/2/library/random.html&gt;
+'''</span>
+
+<span class="comment"># coding=utf-8</span>
+<span class="keyword">import</span> urllib2
+<span class="keyword">import</span> random
+
+url = <span class="string">'http://www.lifevc.com/'</span>
+
+my_headers = [
+    <span class="string">'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648)'</span>,
+    <span class="string">'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 2.0.50727; InfoPath.1'</span>,
+    <span class="string">'Mozilla/4.0 (compatible; GoogleToolbar 5.0.2124.2070; Windows 6.0; MSIE 8.0.6001.18241)'</span>,
+    <span class="string">'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)'</span>,
+    <span class="string">'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0; Sleipnir/2.9.8)'</span>,
+    <span class="comment">#因篇幅关系,此处省略N条</span>
+]
+
+random_header = random.choice(headers)
+<span class="comment"># 可以通过print random_header查看提交的header信息</span>
+req = urllib2.Request(url)
+req.add_header(<span class="string">"User-Agent"</span>, random_header)
+req.add_header(<span class="string">'Host'</span>, <span class="string">'blog.csdn.net'</span>)
+req.add_header(<span class="string">'Referer'</span>, <span class="string">'http://blog.csdn.net'</span>)
+req.add_header(<span class="string">'GET'</span>, url)
+content = urllib2.urlopen(req).read()
+<span class="keyword">print</span> content
+</code></pre><p>其实很简单,这样我们就完成了对代码的一些优化.<br>这一节我们主要讲了如图抓取受限制网站,下一节将会介绍爬虫神兵利器BeautifulSoup.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a href="http://blog.xiaolud.com/2015/01/23/spider-2nd/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spider/">spider</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/urllib/">urllib</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/urllib2/">urllib2</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/01/22/spider-1st/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Python爬虫基础1--urllib</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</section>
+        
+      </div>
+    </div>
+    
+    
+<script>
+  var disqus_shortname = 'xiaolud';
+  
+  var disqus_url = 'http://blog.xiaolud.com/2015/01/23/spider-2nd/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="http://libs.useso.com/js/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>

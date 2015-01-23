@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Being-towards-death]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.xiaolud.com/"/>
-  <updated>2015-01-23T09:44:14.379Z</updated>
+  <updated>2015-01-23T15:37:48.812Z</updated>
   <id>http://blog.xiaolud.com/</id>
   
   <author>
@@ -15,12 +15,232 @@
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[Hexo搭建blog__总结归档]]></title>
+    <title><![CDATA[Python爬虫基础2--urllib2]]></title>
+    <link href="http://blog.xiaolud.com/2015/01/23/spider-2nd/"/>
+    <id>http://blog.xiaolud.com/2015/01/23/spider-2nd/</id>
+    <published>2015-01-23T12:14:48.000Z</published>
+    <updated>2015-01-23T15:37:37.000Z</updated>
+    <content type="html"><![CDATA[<p>上一节我们讲解如何抓取网页和下载图片,在下一节里面我们会讲解如何抓取有限制抓取的网站<br>首先,我们依然用我们上一节课的方法去抓取一个大家都用来举例的网站<blog.cndn.net>,本文主要分以下几个部分:</blog.cndn.net></p>
+<blockquote>
+<p>1.抓取受限网页<br>2.对代码进行一些优化</p>
+</blockquote>
+<h1 id="1-抓取受限网页">1.抓取受限网页</h1>
+<p>首先使用我们上一节学到的知识测试一下:</p>
+<pre><code><span class="horizontal_rule">'''</span>
+@本程序用来抓取blog.csdn.net网页
+<span class="horizontal_rule">'''</span>
+import urllib
+
+url = "http://blog.csdn.net/FansUnion"
+html = urllib.urlopen(url)
+#getcode()方法为返回Http状态码
+print html.getcode()
+html.close()
+#输出
+403
+</code></pre><p>此处我们的输出为403,代表拒绝访问;同理200表示请求成功完成;404表示网址未找到.<br>可见csdn已做了相关屏蔽,通过第一节的方法是无法获取网页,在这里我们需要启动一个新的库:<strong>urllib2</strong><br>但是我们也看到浏览器可以发那个文,是不是我们模拟浏览器操作,就可以获取网页信息.<br>老办法,我们先来看看浏览器是如何提交请求给csdn服务器的.首先简述一下方法:</p>
+<blockquote>
+<p>打开网页,右键点击,选择”inspect Element”(最下面这一项)<br>点击下面弹起来的框框的<strong>Network</strong>选项卡<br>刷新网页,就可以看到<strong>Network</strong>选项卡抓取了很多信息<br>找到其中一个信息展开,就能看到请求包的Header</p>
+</blockquote>
+<p><img src="http://7u2i0z.com1.z0.glb.clouddn.com/2015_01_splider_header_request_2nd.gif" alt="header信息查看" title="header信息查看"></p>
+<p><strong>以下就是整理后的Header信息</strong></p>
+<pre><code>Request <span class="function"><span class="keyword">Method</span>:</span>GET
+Host:blog.csdn.net
+Referer:http:<span class="comment">//blog.csdn.net/?ref=toolbar_logo</span>
+User-Agent:Mozilla/<span class="number">5.0</span> (Macintosh; Intel Mac OS X <span class="number">10</span>_10_1) AppleWebKit/<span class="number">537.36</span> (KHTML, like Gecko) Chrome/<span class="number">38.0</span>.<span class="number">2125.104</span> Safari/<span class="number">537.36</span>
+</code></pre><p>然后根据提取的Header信息,利用urllib2的Request方法模拟浏览器向服务器提交请求,代码如下:</p>
+<pre><code><span class="comment"># coding=utf-8</span>
+<span class="string">'''
+@本程序用来抓取受限网页(blog.csdn.net)
+@User-Agent:客户端浏览器版本
+@Host:服务器地址
+@Referer:跳转地址
+@GET:请求方法为GET
+'''</span>
+<span class="keyword">import</span> urllib2
+
+url = <span class="string">"http://blog.csdn.net/FansUnion"</span>
+
+<span class="comment">#定制自定义Header,模拟浏览器向服务器提交请求</span>
+req = urllib2.Request(url)
+req.add_header(<span class="string">'User-Agent'</span>, <span class="string">'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'</span>)
+req.add_header(<span class="string">'Host'</span>, <span class="string">'blog.csdn.net'</span>)
+req.add_header(<span class="string">'Referer'</span>, <span class="string">'http://blog.csdn.net'</span>)
+req.add_header(<span class="string">'GET'</span>, url)
+
+<span class="comment">#下载网页html并打印</span>
+html = urllib2.urlopen(req)
+content = html.read()
+<span class="keyword">print</span> content
+html.close()
+</code></pre><p>呵呵,你限制我,我就跳过你的限制.据说只要浏览器能够访问的,就能够通过爬虫抓取.</p>
+<h1 id="2-对代码进行一些优化">2.对代码进行一些优化</h1>
+<h3 id="简化提交Header方法">简化提交Header方法</h3>
+<p>发现每次写那么多req.add_header对自己来说是一种折磨,有没有什么方法可以只要复制过来就使用.答案是肯定的.</p>
+<pre><code><span class="variable">#input</span>:
+help(urllib2<span class="built_in">.</span>Request)
+<span class="variable">#output</span>(因篇幅关系,只取__init__方法)
+__init__(<span class="built_in">self</span>, url, <span class="built_in">data</span><span class="subst">=</span><span class="literal">None</span>, headers<span class="subst">=</span>{}, origin_req_host<span class="subst">=</span><span class="literal">None</span>, unverifiable<span class="subst">=</span><span class="literal">False</span>)
+</code></pre><p>通过观察,我们发现headers={},就是说可以以字典的方式提交header信息.那就动手试试咯!!</p>
+<pre><code><span class="comment">#只取自定义Header部分代码</span>
+<span class="variable">csdn_headers =</span> {
+    <span class="string">"User-Agent"</span>: <span class="string">"Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36"</span>,
+    <span class="string">"Host"</span>: <span class="string">"blog.csdn.net"</span>,
+    'Referer': 'http://blog.csdn.net',
+    <span class="string">"GET"</span>: url
+    }
+<span class="variable">req =</span> urllib2.Request(url,<span class="variable">headers=</span>csdn_headers)
+</code></pre><p>发现是不是很简单,在这里感谢斯巴达的无私赐教.</p>
+<h3 id="提供动态头部信息">提供动态头部信息</h3>
+<p>如果按照上述方法进行抓取,很多时候会因为提交信息过于单一,被服务器认为是机器爬虫进行拒绝.<br>那我们是不是有一些更为智能的方法提交一些动态的数据,答案肯定也是肯定的.而且很简单,直接上代码!</p>
+<pre><code><span class="string">'''
+@本程序是用来动态提交Header信息
+@random 动态库,详情请参考&lt;https://docs.python.org/2/library/random.html&gt;
+'''</span>
+
+<span class="comment"># coding=utf-8</span>
+<span class="keyword">import</span> urllib2
+<span class="keyword">import</span> random
+
+url = <span class="string">'http://www.lifevc.com/'</span>
+
+my_headers = [
+    <span class="string">'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648)'</span>,
+    <span class="string">'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 2.0.50727; InfoPath.1'</span>,
+    <span class="string">'Mozilla/4.0 (compatible; GoogleToolbar 5.0.2124.2070; Windows 6.0; MSIE 8.0.6001.18241)'</span>,
+    <span class="string">'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)'</span>,
+    <span class="string">'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0; Sleipnir/2.9.8)'</span>,
+    <span class="comment">#因篇幅关系,此处省略N条</span>
+]
+
+random_header = random.choice(headers)
+<span class="comment"># 可以通过print random_header查看提交的header信息</span>
+req = urllib2.Request(url)
+req.add_header(<span class="string">"User-Agent"</span>, random_header)
+req.add_header(<span class="string">'Host'</span>, <span class="string">'blog.csdn.net'</span>)
+req.add_header(<span class="string">'Referer'</span>, <span class="string">'http://blog.csdn.net'</span>)
+req.add_header(<span class="string">'GET'</span>, url)
+content = urllib2.urlopen(req).read()
+<span class="keyword">print</span> content
+</code></pre><p>其实很简单,这样我们就完成了对代码的一些优化.<br>这一节我们主要讲了如图抓取受限制网站,下一节将会介绍爬虫神兵利器BeautifulSoup.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>上一节我们讲解如何抓取网页和下载图片,在下一节里面我们会讲解如何抓取有限制抓取的网站<br>首先,我们依然用我们上一节课的方法去抓取一个大家都用来举例的网站<blog.cndn.net>,本文主要分以下几个部分:</blog.cndn.net></p>
+<blockquot]]>
+    </summary>
+    
+      <category term="python" scheme="http://blog.xiaolud.com/tags/python/"/>
+    
+      <category term="spider" scheme="http://blog.xiaolud.com/tags/spider/"/>
+    
+      <category term="urllib" scheme="http://blog.xiaolud.com/tags/urllib/"/>
+    
+      <category term="urllib2" scheme="http://blog.xiaolud.com/tags/urllib2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Python爬虫基础1--urllib]]></title>
+    <link href="http://blog.xiaolud.com/2015/01/22/spider-1st/"/>
+    <id>http://blog.xiaolud.com/2015/01/22/spider-1st/</id>
+    <published>2015-01-22T12:14:48.000Z</published>
+    <updated>2015-01-23T15:37:16.000Z</updated>
+    <content type="html"><![CDATA[<p>学习python完基础,有些迷茫.眼睛一闭,一种空白的窒息源源不断而来.还是缺少练习,遂拿爬虫来练练手.学习完斯巴达python爬虫课程后,将心得整理如下,供后续翻看.整篇笔记主要分以下几个部分:</p>
+<blockquote>
+<p>1.做一个简单的爬虫程序<br>2.小试牛刀—抓取百度贴吧图片<br>3.总结</p>
+</blockquote>
+<h1 id="1-做一个简单的爬虫程序">1.做一个简单的爬虫程序</h1>
+<h3 id="首先环境描述">首先环境描述</h3>
+<blockquote>
+<p>Device: Mba 2012 Yosemite 10.10.1<br>Python: python 2.7.9<br>编辑器: Sublime Text 3</p>
+</blockquote>
+<p>这个没有什么好说的,直接上代码吧!</p>
+<pre><code><span class="horizontal_rule">'''</span>
+@ urllib为python自带的一个网络库
+@ urlopen为urllib的一个方法,用于打开一个连接并抓取网页,
+<span class="code">  然后通过read()方法把值赋给read()</span>
+<span class="horizontal_rule">'''</span>
+import urllib
+
+url = "http://www.lifevc.com"#多嘴两句,为什么要选lifevc呢,主要是最近它很惹我.
+html = urllib.urlopen(url)
+content = html.read()
+html.close()
+#可以通过print打印出网页内容
+print content
+</code></pre><p>很简单,基本上没有可说的,这个也就是python的魅力,几行代码就完成.<br>当然我们仅仅抓取网页,没有实在的价值.接下来我们就开始做一点有意义的事情.</p>
+<h1 id="2-小试牛刀">2.小试牛刀</h1>
+<h3 id="抓取百度贴吧图片">抓取百度贴吧图片</h3>
+<p>其实也很简单,因为要抓取图片,还需要先分析一下网页源代码<br><strong>(这里以知道基本html知识,浏览器以chrome为例)</strong><br>如图,这里简要说下步骤,请参考.</p>
+<blockquote>
+<p>打开网页,右键点击,选择”inspect Element”(最下面这一项)<br>点击下面弹起来的框框<strong>最左边那个问号</strong>,问号会变成蓝色<br>移动鼠标去点击我们想要抓取的图片(一个萌妹子)<br>如图,我们就可以图片在源码中的位置了</p>
+</blockquote>
+<p><img src="http://7u2i0z.com1.z0.glb.clouddn.com/2015_01_chrome_url.gif" alt="图片源码分析" title="图片源码分析"></p>
+<p>下面将源码相关拷贝出来</p>
+<pre><code>&lt;img <span class="variable">class=</span><span class="string">"BDE_Image"</span> <span class="variable">src=</span><span class="string">"http://imgsrc.baidu.com/forum/w%3D580/
+sign=3d5aacaab21c8701d6b6b2ee177e9e6e/17a6d439b6003af329aece2e342ac65c1138b6d8.
+jpg"</span> <span class="variable">height=</span><span class="string">"840"</span> <span class="variable">width=</span><span class="string">"560"</span> <span class="variable">style=</span><span class="string">"cursor: url(http://tb2.bdstatic.com/tb/
+static-pb/img/cur_zin.cur), pointer;"</span>&gt;
+</code></pre><p>经分析和对比(这里略掉),基本上可以看到要抓取的图片几个特征:</p>
+<blockquote>
+<p>1.在img标签下<br>2.在名为BDE_Image的类下面<br>3.图片格式为jpg<br>    正则表达式后续我会更新,请关注</p>
+</blockquote>
+<p>依照上述判断,直接上代码</p>
+<pre><code><span class="string">'''
+@本程序用来下载百度贴吧图片
+@re 为正则说明库
+'''</span>
+<span class="keyword">import</span> urllib
+<span class="keyword">import</span> re
+
+<span class="comment"># 获取网页html信息</span>
+url = <span class="string">"http://tieba.baidu.com/p/2336739808"</span>
+html = urllib.urlopen(url)
+content = html.read()
+html.close()
+
+<span class="comment"># 通过正则匹配图片特征,并获取图片链接</span>
+img_tag = re.compile(<span class="string">r'class="BDE_Image" src="(.+?\.jpg)"'</span>)
+img_links = re.findall(img_tag, content)
+
+<span class="comment"># 下载图片 img_counter为图片计数器(文件名)</span>
+img_counter = <span class="number">0</span>
+<span class="keyword">for</span> img_link <span class="keyword">in</span> img_links:
+    img_name = <span class="string">'%s.jpg'</span> % img_counter
+    urllib.urlretrieve(img_link, <span class="string">"//Users//Sean//Downloads//tieba//%s"</span> %img_name)
+    img_counter += <span class="number">1</span>
+</code></pre><p><strong>如图,我们就抓取你懂的图片</strong><br>    <img src="http://7u2i0z.com1.z0.glb.clouddn.com/2015_01_tieba.png" alt="百度贴吧抓取图片" title="百度贴吧抓取图片"></p>
+<h3 id="3-总结">3.总结</h3>
+<p>如上两节,我们就很轻松的就可以网页或者图片.<br>补充一点小技巧,如果遇到不是很明白的库或者方法,可以通过以下方法进行初步了解.</p>
+<pre><code>dir(urllib)                     <span class="comment">#查看当前库有哪些方法</span>
+<span class="built_in">help</span>(urllib.urlretrieve)        <span class="comment">#查看跟当前方法相关的作用或者参数,官方比较权威</span>
+</code></pre><p>或者<a href="https://docs.python.org/2/library/index.html" target="_blank" rel="external">https://docs.python.org/2/library/index.html</a>进项相关搜索.<br>当然百度也可以,但是效率太低.建议使用 <a href="http://xie.lu" target="_blank" rel="external">http://xie.lu</a> 进行相关搜索(你懂了,绝对满意).<br>这一节我们讲解如何抓取网页和下载图片,在下一节里面我们会讲解如何抓取有限制抓取的网站.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>学习python完基础,有些迷茫.眼睛一闭,一种空白的窒息源源不断而来.还是缺少练习,遂拿爬虫来练练手.学习完斯巴达python爬虫课程后,将心得整理如下,供后续翻看.整篇笔记主要分以下几个部分:</p>
+<blockquote>
+<p>1.做一个简单的爬虫程序<br>2.]]>
+    </summary>
+    
+      <category term="python" scheme="http://blog.xiaolud.com/tags/python/"/>
+    
+      <category term="spider" scheme="http://blog.xiaolud.com/tags/spider/"/>
+    
+      <category term="urllib" scheme="http://blog.xiaolud.com/tags/urllib/"/>
+    
+      <category term="urllib2" scheme="http://blog.xiaolud.com/tags/urllib2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Hexo搭建blog__总结]]></title>
     <link href="http://blog.xiaolud.com/2015/01/19/Hexo_blog/"/>
     <id>http://blog.xiaolud.com/2015/01/19/Hexo_blog/</id>
     <published>2015-01-18T18:02:32.000Z</published>
-    <updated>2015-01-23T09:41:19.000Z</updated>
-    <content type="html"><![CDATA[<p><!-- 1.语法注意,Hexo有一个强制语法要求,就是必须要有个空格 --><br>经过一段时间的折腾,总算搭建起来了Hexo的blog.学习hexo搭建静态博客中遇到些许问题,总结下来,以供后续翻看.</p>
+    <updated>2015-01-23T12:26:40.000Z</updated>
+    <content type="html"><![CDATA[<p>一直以来,都有着折腾blog的想法,除了刚出来工作的那段时间,进场在51cto上写些东西.后续就基本上就荒芜了.wordpress买了不少,主机和域名也琢磨了不少,就是压根没写什么东西.而且也越来越感觉到,毕业一年后到现在,自己几乎没有怎么努力做一些事情,进步也是乏善可陈.现在开始换方向了,作为一名高龄程序猿,需要付出的也许更多,也必须坚持.希望这次能写写东西,能写的久一点.那就从搭建blog这个事情上开始做起吧!</p>
+<hr>
+<p>经过一段时间的折腾,总算搭建起来了Hexo的blog.学习hexo搭建静态博客中遇到些许问题,总结下来,以供后续翻看.</p>
 <blockquote>
 <p>1.Hexo安装<br>2.小试牛刀<br>3.配置文件及主题(模板文件)</p>
 </blockquote>
@@ -114,7 +334,8 @@ description: Sean'</span>s walk step <span class="keyword">by</span> step<span c
 
 <span class="comment"># Disqus#hexo默认支持Disqus</span>
 <span class="attribute">disqus_shortname</span>: xxxxxxx<span class="comment">#如果你是disqus用户,输入你的shortname,即可开启评论服务.注意不是username.</span>
-</code></pre><h3 id="安装第三方主题">安装第三方主题</h3>
+</code></pre><p><strong>语法注意:Hexo有一个强制语法要求,”:”后面必须要有个空格</strong></p>
+<h3 id="安装第三方主题">安装第三方主题</h3>
 <p>到<a href="https://github.com/hexojs/hexo/wiki/Themes," title="Hexo Theme" target="_blank" rel="external">Hexo Theme</a>浏览选择的主题,并复制主题github地址.</p>
 <p>安装主题(这里以Alberta主题为例).</p>
 <pre><code>git clone http<span class="variable">s:</span>//github.<span class="keyword">com</span>/ken8203/hexo-theme-alberta.git themes/alberta
@@ -128,9 +349,7 @@ git pull
 <p><a href="http://hexo.io/docs/,&#39;HEXO 官方DOCS&#39;" target="_blank" rel="external">Hexo 官方DOCS</a><br><a href="http://ibruce.info/2013/11/22/hexo-your-blog/&#39;Hexo你的博客&#39;" target="_blank" rel="external">Hexo你的博客</a><br><a href="http://zhaofei.tk/2014/11/30/jekyll_to_hexo/,&#39;更换博客系统——从jekyll到hexo&#39;" target="_blank" rel="external">更换博客系统——从jekyll到hexo</a></p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p><!-- 1.语法注意,Hexo有一个强制语法要求,就是必须要有个空格 --><br>经过一段时间的折腾,总算搭建起来了Hexo的blog.学习hexo搭建静态博客中遇到些许问题,总结下来,以供后续翻看.</p>
-<blockquote>
-<p>1.Hexo安装<br>2.]]>
+    <![CDATA[<p>一直以来,都有着折腾blog的想法,除了刚出来工作的那段时间,进场在51cto上写些东西.后续就基本上就荒芜了.wordpress买了不少,主机和域名也琢磨了不少,就是压根没写什么东西.而且也越来越感觉到,毕业一年后到现在,自己几乎没有怎么努力做一些事情,进步也是乏善可陈.]]>
     </summary>
     
       <category term="hexo" scheme="http://blog.xiaolud.com/tags/hexo/"/>

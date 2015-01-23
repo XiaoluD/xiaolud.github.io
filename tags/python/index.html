@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Sean&#39;s blog</title>
+  <title>Tag: python | Sean&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Sean's walk step by step">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Sean's blog">
-<meta property="og:url" content="http://blog.xiaolud.com/">
+<meta property="og:url" content="http://blog.xiaolud.com/tags/python/">
 <meta property="og:site_name" content="Sean's blog">
 <meta property="og:description" content="Sean's walk step by step">
 <meta name="twitter:card" content="summary">
@@ -309,154 +309,6 @@ img_counter = <span class="number">0</span>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spider/">spider</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/urllib/">urllib</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/urllib2/">urllib2</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-Hexo_blog" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/01/19/Hexo_blog/" class="article-date">
-  <time datetime="2015-01-18T18:02:32.000Z" itemprop="datePublished">Jan 19 2015</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/01/19/Hexo_blog/">Hexo搭建blog__总结</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>一直以来,都有着折腾blog的想法,除了刚出来工作的那段时间,进场在51cto上写些东西.后续就基本上就荒芜了.wordpress买了不少,主机和域名也琢磨了不少,就是压根没写什么东西.而且也越来越感觉到,毕业一年后到现在,自己几乎没有怎么努力做一些事情,进步也是乏善可陈.现在开始换方向了,作为一名高龄程序猿,需要付出的也许更多,也必须坚持.希望这次能写写东西,能写的久一点.那就从搭建blog这个事情上开始做起吧!</p>
-<hr>
-<p>经过一段时间的折腾,总算搭建起来了Hexo的blog.学习hexo搭建静态博客中遇到些许问题,总结下来,以供后续翻看.</p>
-<blockquote>
-<p>1.Hexo安装<br>2.小试牛刀<br>3.配置文件及主题(模板文件)</p>
-</blockquote>
-<h1 id="1-_Hexo安装"><strong>1. Hexo安装</strong></h1>
-<h2 id="依赖环境准备">依赖环境准备</h2>
-<h5 id="Git安装">Git安装</h5>
-<pre><code>Mac: brew <span class="operator"><span class="keyword">install</span> git
-Linux (Ubuntu, Debian): sudo apt-<span class="keyword">get</span> <span class="keyword">install</span> git-core
-Linux (Fedora, Red Hat, CentOS): sudo yum <span class="keyword">install</span> git-core
-Windows: Download &amp; <span class="keyword">install</span> msysgit.</span>
-</code></pre><h5 id="Node-js安装">Node.js安装</h5>
-<p>-点击<a href="http://nodejs.org/download/" title="nodj官网下载链接" target="_blank" rel="external">Nodj官网下载链接</a>下载对应版本进行安装</p>
-<pre><code>mac用户也可以使用brew <span class="operator"><span class="keyword">install</span> node进行安装</span>
-</code></pre><h5 id="Github准备(后续会单独整理一篇blog,静候后续更新)">Github准备(后续会单独整理一篇blog,静候后续更新)</h5>
-<blockquote>
-<p>创建Github账号<br>创建SSH key并添加到Github<br>设置个人信息(link到github上)<br>建立对应仓库名(your_username.github.io)</p>
-</blockquote>
-<h5 id="Mac用户还需要安装Xcode和Xcode命令行工具">Mac用户还需要安装Xcode和Xcode命令行工具</h5>
-<h2 id="安装Hexo">安装Hexo</h2>
-<p>当前面先决条件都安装好了之后,运行下列命令安装Hexo</p>
-<pre><code>npm <span class="operator"><span class="keyword">install</span> hexo -g</span>
-</code></pre><p>初始化博客目录</p>
-<pre><code>hexo init <span class="tag">&lt;<span class="title">folder</span>&gt;</span>
-</code></pre><p>生成静态页面</p>
-<pre><code>hexo <span class="keyword">generate</span>
-</code></pre><p>本地启动,然后在浏览器里面输入<a href="http://127.0.0.1:4000" target="_blank" rel="external">http://127.0.0.1:4000</a>就可以看到效果.(可以使用’ctrl+c’关闭Server).</p>
-<pre><code>hexo <span class="keyword">server</span>
-</code></pre><p>上传站点到Github</p>
-<blockquote>
-<p>首先需要修改配置文件<strong>./_config.yml</strong>,如下:</p>
-</blockquote>
-<pre><code><span class="label">deploy:</span>
-<span class="label">type:</span> github
-<span class="label">repository:</span> https://github.com/yourname/youname.github.io.git
-<span class="label">branch:</span> master <span class="preprocessor">#一般填写master即可</span>
-</code></pre><blockquote>
-<p>然后运行以下命令,稍等片刻,可以通过<a href="http://yourname.github.io" target="_blank" rel="external">http://yourname.github.io</a>访问你上传的demo网站.绑定指定域名会在后续博文中做出说明.</p>
-</blockquote>
-<pre><code><span class="title">hexo</span> deploy
-</code></pre><p>到此为止,已经完成Hexo的初步安装,并上传到Github.<br>下面我们将介绍如何新建一篇blog和页面,并完成自定义域名的访问.</p>
-<h1 id="2-小试牛刀"><strong>2.小试牛刀</strong></h1>
-<h3 id="新建文章,也就是新建一篇blog">新建文章,也就是新建一篇blog</h3>
-<pre><code>hexo <span class="keyword">new</span> <span class="string">"blog_name"</span>
-</code></pre><p>运行完命令后会在./source/<em>posts下面生成 blog<em>name.md文件,就可以在vim或者其他任意编辑器里面尽情的进行创作了.<br>__blog头部解析:</em></em></p>
-<pre><code><span class="attribute">title</span>: <span class="string">             #当前blog名称,比如title: Hexo搭建blog_总结</span>
-<span class="attribute">tags</span>: <span class="string">[]            #blog标签,比如github,hexo</span>
-<span class="attribute">date</span>: <span class="string">2015-01-23 15:06:20</span>
-<span class="attribute">categories</span>: <span class="string">         #文章归类,比如小技巧,博客搭建</span>
-</code></pre><p>编辑blog是请遵循MarkDown语法,详情可以参考<a href="http://wowubuntu.com/markdown/" title="MarkDown语法" target="_blank" rel="external">MarkDown语法</a></p>
-<h3 id="新建页面,比如新建关于,友情链接等页面">新建页面,比如新建关于,友情链接等页面</h3>
-<pre><code>hexo <span class="keyword">new</span> page <span class="string">"page_name"</span>
-</code></pre><p>然后可以在<a href="http://127.0.0.1:4000" target="_blank" rel="external">http://127.0.0.1:4000</a>查看最终修改结果,确定无误后.重新通过以下步骤<strong>部署到Github</strong>.</p>
-<pre><code><span class="title">hexo</span> generater  <span class="comment">#重新生成静态页面,静态网站更新需要全站更新</span>
-hexo deploy     <span class="comment">#将刚才新生成的站点同步到Github上</span>
-</code></pre><h3 id="绑定自定义域名">绑定自定义域名</h3>
-<p>购买域名:推荐使用Godaddy.全球最大的域名提供商,关键是它还支持支付宝.详情略.<br>配置DNS,这里以dnspod为例,详情如图:</p>
-<p><img src="http://7u2i0z.com1.z0.glb.clouddn.com/2015_01_dnspod.png" alt="dnspod" title="dnspod"></p>
-<p>设置CNAME,玩过Github Page的应该知道,只需要手动在yourname.github.io根页面下新建一个CNAME的文件.这里很重要,因为静态网站更新是全站整体更新的.如果手动添加的会在更新时被删除掉,导致配置失效.<br>在这里,我们需要在<strong>./.source/</strong>目录下手动新建一个<strong>CNAME</strong>文件,写入指定的域名.</p>
-<pre><code>blog.xiaolud.<span class="keyword">com</span>    #如上图,我们这里填入&lt;blog.xiaolud.<span class="keyword">com</span>&gt;即可.
-</code></pre><p>稍等片刻,我们就能够通过指定的域名访问我们的blog了.<br>到此,我们就完成了blog的搭建,并学习了如何写一篇blog,新建一个新的页面.下一节将介绍一些基础的配置,主题的更换以及评论的开启.</p>
-<h1 id="3-配置文件及主题">3.配置文件及主题</h1>
-<h3 id="网站目录">网站目录</h3>
-<pre><code>├── _config.yml
-├── package.json
-├── scaffolds
-├── scripts
-├── source
-<span class="string">|   ├── _drafts</span>
-<span class="string">|   └── _posts</span>
-└── themes
-</code></pre><h3 id="_config-yml">_config.yml</h3>
-<p>Hexo 主要配置文件为<strong>./_config.yml</strong>,我们在第一节里面已有说明,这里只列出需要配置的选项.<br>不多,详情请参考<a href="http://hexo.io/docs/configuration.html,&quot;hexo官方配置&quot;" target="_blank" rel="external">hexo官方配置</a>.</p>
-<pre><code><span class="comment"># Site</span>
-<span class="attribute">title</span>: Sean<span class="string">'s blog #网站标题
-subtitle: Being-towards-death#网站小标题
-description: Sean'</span>s walk step <span class="keyword">by</span> step<span class="comment">#网站描述</span>
-<span class="attribute">author</span>: Sean<span class="comment"># yourname</span>
-<span class="attribute">email</span>: xiaoxxxx<span class="property">@xxxx</span>.com<span class="comment"># your mail</span>
-<span class="attribute">language</span>: zh-CN<span class="comment">#language</span>
-
-<span class="comment"># URL</span>
-<span class="comment">## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'</span>
-<span class="attribute">url</span>: <span class="attribute">http</span>:<span class="regexp">//</span>blog.xiaolud.com <span class="comment">#你的域名</span>
-<span class="attribute">root</span>: /
-<span class="attribute">permalink</span>: :year<span class="regexp">/:month/</span>:day<span class="regexp">/:title/</span>
-<span class="attribute">tag_dir</span>: tags
-<span class="attribute">archive_dir</span>: archives
-<span class="attribute">category_dir</span>: categories
-<span class="attribute">code_dir</span>: downloads/code
-<span class="attribute">permalink_defaults</span>:
-
-<span class="comment"># Disqus#hexo默认支持Disqus</span>
-<span class="attribute">disqus_shortname</span>: xxxxxxx<span class="comment">#如果你是disqus用户,输入你的shortname,即可开启评论服务.注意不是username.</span>
-</code></pre><p><strong>语法注意:Hexo有一个强制语法要求,”:”后面必须要有个空格</strong></p>
-<h3 id="安装第三方主题">安装第三方主题</h3>
-<p>到<a href="https://github.com/hexojs/hexo/wiki/Themes," title="Hexo Theme" target="_blank" rel="external">Hexo Theme</a>浏览选择的主题,并复制主题github地址.</p>
-<p>安装主题(这里以Alberta主题为例).</p>
-<pre><code>git clone http<span class="variable">s:</span>//github.<span class="keyword">com</span>/ken8203/hexo-theme-alberta.git themes/alberta
-</code></pre><p>然后配置<strong>_config.yml</strong>,选择新安装的主题.</p>
-<pre><code><span class="tag">theme</span><span class="pseudo">:alberta</span>
-</code></pre><p>配置theme/_config.yml,这里就不展开说明,详情请参考各个主题README.</p>
-<p>更新主题</p>
-<pre><code><span class="built_in">cd</span> themes/alberta
-git pull
-</code></pre><p>至此,我们就基本上完成了Hexo的一些常用配置,还有其他方面的需求,请参考.</p>
-<p><a href="http://hexo.io/docs/,&#39;HEXO 官方DOCS&#39;" target="_blank" rel="external">Hexo 官方DOCS</a><br><a href="http://ibruce.info/2013/11/22/hexo-your-blog/&#39;Hexo你的博客&#39;" target="_blank" rel="external">Hexo你的博客</a><br><a href="http://zhaofei.tk/2014/11/30/jekyll_to_hexo/,&#39;更换博客系统——从jekyll到hexo&#39;" target="_blank" rel="external">更换博客系统——从jekyll到hexo</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a href="http://blog.xiaolud.com/2015/01/19/Hexo_blog/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/blog/">blog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
 
     </footer>
   </div>
