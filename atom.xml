@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Being-towards-death]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.xiaolud.com/"/>
-  <updated>2015-01-18T17:57:37.363Z</updated>
+  <updated>2015-01-23T06:18:17.785Z</updated>
   <id>http://blog.xiaolud.com/</id>
   
   <author>
@@ -13,6 +13,61 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[]]></title>
+    <link href="http://blog.xiaolud.com/2015/01/19/Hexo%E6%90%AD%E5%BB%BAblog_%E6%80%BB%E7%BB%93/"/>
+    <id>http://blog.xiaolud.com/2015/01/19/Hexo搭建blog_总结/</id>
+    <published>2015-01-18T18:02:32.000Z</published>
+    <updated>2015-01-23T06:17:26.000Z</updated>
+    <content type="html"><![CDATA[<p>title: Hexo搭建blog_总结<br>tags: [hexo,github,blog]<br>date: 2015-01-19 02:02:32</p>
+<h2 id="categories:github">categories:github</h2>
+<p>经过一段时间的折腾,总算搭建起来了Hexo的blog,学习hexo搭建静态博客中遇到些许问题,总结下来,以供后续翻看.</p>
+<blockquote>
+<p>1.Hexo安装<br>2.基本配置<br>3.命令备份</p>
+</blockquote>
+<h1 id="1-_Hexo安装"><strong>1. Hexo安装</strong></h1>
+<h2 id="&gt;依赖环境准备">&gt;依赖环境准备</h2>
+<blockquote>
+<blockquote>
+<p>Git安装</p>
+</blockquote>
+</blockquote>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Mac: brew install git</div><div class="line">Linux (Ubuntu, Debian): sudo apt-get install git-core</div><div class="line">Linux (Fedora, Red Hat, CentOS): sudo yum install git-core</div><div class="line">Windows: Download & install msysgit.</div></pre></td></tr></table></figure>
+
+<blockquote>
+<blockquote>
+<p>Node.js安装(<a href="http://nodejs.org/download/" target="_blank" rel="external">http://nodejs.org/download/</a>)</p>
+</blockquote>
+</blockquote>
+<p><em>点击<a href="http://nodejs.org/download/" title="nodj官网下载链接" target="_blank" rel="external">nodj官网下载链接</a>下载对应版本进行安装
+</em>mac用户可以使用brew install node进行安装</p>
+<blockquote>
+<blockquote>
+<p>Github准备(会单独整理一篇blog,静候后续更新)</p>
+</blockquote>
+</blockquote>
+<p><em>创建Github账号
+</em>创建SSH key并添加到Github<br><em>设置个人信息(link到github上)
+</em>建立对应仓库名(your_username.github.io)</p>
+<blockquote>
+<blockquote>
+<p>Mac用户还需要安装Xcode和Xcode命令行工具</p>
+</blockquote>
+<h2 id="安装Hexo">安装Hexo</h2>
+<p>新建一个blog目录,然后在当前运行下列命令安装Hexo<br>    npm install hexo -g<br>初始化博客目录<br>    hexo init</p>
+</blockquote>
+<p>hexo new “postName” #新建文章<br>hexo new page “pageName” #新建页面<br>hexo generate #生成静态页面至public目录<br>hexo server #开启预览访问端口（默认端口4000，’ctrl + c’关闭server）<br>hexo deploy #将.deploy目录部署到GitHub</p>
+<p>1.语法注意,Hexo有一个强制语法要求,就是必须要有个空格<br>2.CNAME文件被覆盖问题<br>    因为hexo每次都是重新生成整站数据</p>
+<p>未完待续</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>title: Hexo搭建blog_总结<br>tags: [hexo,github,blog]<br>date: 2015-01-19 02:02:32</p>
+<h2 id="categories:github">categories:github</h2>
+<p>经过]]>
+    </summary>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[test_blog]]></title>
