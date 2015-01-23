@@ -170,7 +170,7 @@ Windows: Download &amp; <span class="keyword">install</span> msysgit.</span>
 hexo deploy     <span class="comment">#将刚才新生成的站点同步到Github上</span>
 </code></pre><h3 id="绑定自定义域名">绑定自定义域名</h3>
 <p>购买域名:推荐使用Godaddy.全球最大的域名提供商,关键是它还支持支付宝.详情略.<br>配置DNS,这里以dnspod为例,详情如图:</p>
-<p>![Dnspod_cname_setting] (<a href="http://7u2i0z.com1.z0.glb.clouddn.com/2015_01_dnspod.png" target="_blank" rel="external">http://7u2i0z.com1.z0.glb.clouddn.com/2015_01_dnspod.png</a> “Dnspod_cname_setting”)</p>
+<p>![Dnspod_cname_seting] (<a href="http://7u2i0z.com1.z0.glb.clouddn.com/2015_01_dnspod.png" target="_blank" rel="external">http://7u2i0z.com1.z0.glb.clouddn.com/2015_01_dnspod.png</a> “Dnspod_cname_setting”)</p>
 <p>设置CNAME,玩过Github Page的应该知道,只需要手动在yourname.github.io根页面下新建一个CNAME的文件.这里很重要,因为静态网站更新是全站整体更新的.如果手动添加的会在更新时被删除掉,导致配置失效.<br>在这里,我们需要在<strong>./.source/</strong>目录下手动新建一个<strong>CNAME</strong>文件,写入指定的域名.</p>
 <pre><code>blog.xiaolud.<span class="keyword">com</span>    #如上图,我们这里填入&lt;blog.xiaolud.<span class="keyword">com</span>&gt;即可.
 </code></pre><p>稍等片刻,我们就能够通过指定的域名访问我们的blog了.<br>到此,我们就完成了blog的搭建,并学习了如何写一篇blog,新建一个新的页面.下一节将介绍一些基础的配置,主题的更换以及评论的开启.</p>
