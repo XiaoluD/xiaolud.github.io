@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Tag: douban | Sean&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Sean's walk step by step">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sean's blog">
+<meta property="og:url" content="http://blog.xiaolud.com/tags/douban/">
+<meta property="og:site_name" content="Sean's blog">
+<meta property="og:description" content="Sean's walk step by step">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sean's blog">
+<meta name="twitter:description" content="Sean's walk step by step">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Sean&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/image/favicon.ico">
+  
+  <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link href="//libs.useso.com/js/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Sean&#39;s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Being-towards-death</a>
+        </h2>
+      
+    </div>
+    <div id="header-menu">
+      <nav id="main-nav">
+        <ul>
+        
+          <li><a href="/"><i class="fa fa-home icon-setting"></i></a></li>
+        
+          <li><a href="/archives"><i class="fa fa-archive icon-setting"></i></a></li>
+        
+          <li><a href="/about"><i class="fa fa-user icon-setting"></i></a></li>
+        
+        
+          <li><a href="/atom.xml"><i class="fa fa-rss %> icon-setting"></i></a></li>
+        
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-spider-4th-doubantop100" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/01/29/spider-4th-doubantop100/" class="article-date">
+  <time datetime="2015-01-29T14:00:00.000Z" itemprop="datePublished">Jan 29 2015</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/29/spider-4th-doubantop100/">Python爬虫基础4-豆瓣top100</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>看了下，很多人都有写如何爬豆瓣，遂当做一个学习课题，写出来看看啊。本文主要分一下几个部分：</p>
+<blockquote>
+<p>分析豆瓣top页面，构建程序结构<br>依次写出代码<br>整理代码</p>
+</blockquote>
+<h1 id="分析豆瓣top页面，构建程序结构">分析豆瓣top页面，构建程序结构</h1>
+<p>1.首先打开网页<a href="http://movie.douban.com/top250?start，也就是top页面" target="_blank" rel="external">http://movie.douban.com/top250?start，也就是top页面</a><br>然后试着点击到top100的页面，注意带top100的链接依次为</p>
+<pre><code>http:<span class="comment">//movie.douban.com/top250?start=0</span>
+http:<span class="comment">//movie.douban.com/top250?start=25</span>
+http:<span class="comment">//movie.douban.com/top250?start=50</span>
+http:<span class="comment">//movie.douban.com/top250?start=75</span>
+</code></pre><p>2.然后通过查看源码，发现电影名的代码如下：</p>
+<pre><code><span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"title"</span>&gt;</span>肖申克的救赎<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"title"</span>&gt;</span>&amp;nbsp;/&amp;nbsp;The Shawshank Redemption<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+</code></pre><p>如图，因为有一些英文名等描述，通过正则抓取有些干扰，可能还需要后续过滤。</p>
+<p>根据以上信息，此程序主要分以下3个步骤：</p>
+<blockquote>
+<p>构建url地址池<br>抓取top100电影名称<br>依次打印输出</p>
+</blockquote>
+<h1 id="依次写出代码">依次写出代码</h1>
+<p>1.构建url地址池。代码如下：</p>
+<pre><code><span class="built_in">import</span> urllib2
+<span class="built_in">import</span> re
+<span class="comment"># ----------确定url地址池------------</span>
+<span class="variable">pre_url =</span> 'http://movie.douban.com/top250?<span class="variable">start=</span>'
+<span class="variable">top_urls =</span> []
+<span class="comment"># 因为top100，每页25部电影，故为4页,从零开始</span>
+for num <span class="keyword">in</span> range(<span class="number">4</span>):
+    top_urls.append(pre_url + str(num * <span class="number">25</span>))
+</code></pre><p>2.抓取top100电影名称</p>
+<pre><code><span class="comment"># ------------抓取top100电影名称----------</span>
+top_content = []
+top_tag = re.compile(<span class="string">r'&lt;span class="title"&gt;(.+?)&lt;/span&gt;'</span>)
+<span class="keyword">for</span> url <span class="keyword">in</span> top_urls:
+    content = urllib2.urlopen(url).read()
+    pre_content = re.findall(top_tag, content)
+    <span class="comment"># 过滤不符合条件的list，得到最后的top100的list</span>
+    <span class="keyword">for</span> item <span class="keyword">in</span> pre_content:
+        <span class="keyword">if</span> item.find(<span class="string">'&amp;nbsp'</span>) == -<span class="number">1</span>:
+            top_content.append(item)
+</code></pre><p>3.打印输出</p>
+<pre><code>top_num = <span class="number">1</span>
+<span class="keyword">for</span> <span class="keyword">item</span> <span class="operator">in</span> top_content:
+    print <span class="string">'Top'</span> + str(top_num) + <span class="string">'   '</span> + <span class="keyword">item</span>
+    top_num += <span class="number">1</span>
+</code></pre><h1 id="整理代码">整理代码</h1>
+<p>我还是python新手，还没有太多的pythonic思想，也没有代码优化技巧，只能说是整理。<br>其次，个人习惯，在简单的代码里面我还是喜欢少用函数，尽量不隐藏代码的逻辑。<br>以下代码请参考，并欢迎提意见，希望得到大家的意见，谢谢！<br>整理后的代码如下：</p>
+<pre><code><span class="comment"># coding=utf-8</span>
+<span class="string">'''
+本代码为自动抓取豆瓣top100电影代码
+@pre_url  url地址前缀，在这里为http://movie.douban.com/top250?start=
+@top_urls url地址池
+@top_tag  为抓取电影名正则表达式
+'''</span>
+
+<span class="keyword">import</span> urllib2
+<span class="keyword">import</span> re
+
+pre_url = <span class="string">'http://movie.douban.com/top250?start='</span>
+top_urls = []
+top_tag = re.compile(<span class="string">r'&lt;span class="title"&gt;(.+?)&lt;/span&gt;'</span>)
+top_content = []
+top_num = <span class="number">1</span>
+
+<span class="comment"># ----------确定url地址池------------</span>
+<span class="comment"># 因为top100，每页25部电影，故为4页,从零开始</span>
+<span class="keyword">for</span> num <span class="keyword">in</span> range(<span class="number">4</span>):
+    top_urls.append(pre_url + str(num * <span class="number">25</span>))
+
+
+<span class="comment"># ------------抓取top100电影名称，并打印输出----------</span>
+top_tag = re.compile(<span class="string">r'&lt;span class="title"&gt;(.+?)&lt;/span&gt;'</span>)
+<span class="keyword">for</span> url <span class="keyword">in</span> top_urls:
+    content = urllib2.urlopen(url).read()
+    pre_content = re.findall(top_tag, content)
+    <span class="comment"># 过滤并打印输出</span>
+    <span class="keyword">for</span> item <span class="keyword">in</span> pre_content:
+        <span class="keyword">if</span> item.find(<span class="string">'&amp;nbsp'</span>) == -<span class="number">1</span>:
+            <span class="keyword">print</span> <span class="string">'Top'</span> + str(top_num) + <span class="string">'   '</span> + item
+            top_num += <span class="number">1</span>
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a href="http://blog.xiaolud.com/2015/01/29/spider-4th-doubantop100/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/douban/">douban</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spider/">spider</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+  
+
+</section>
+        
+      </div>
+    </div>
+    
+    
+<script>
+  var disqus_shortname = 'xiaolud';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="http://libs.useso.com/js/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>

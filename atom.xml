@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Being-towards-death]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.xiaolud.com/"/>
-  <updated>2015-01-23T15:41:33.418Z</updated>
+  <updated>2015-01-29T14:46:57.131Z</updated>
   <id>http://blog.xiaolud.com/</id>
   
   <author>
@@ -15,9 +15,179 @@
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[Python爬虫基础4-豆瓣top100]]></title>
+    <link href="http://blog.xiaolud.com/2015/01/29/spider-4th-doubantop100/"/>
+    <id>http://blog.xiaolud.com/2015/01/29/spider-4th-doubantop100/</id>
+    <published>2015-01-29T14:00:00.000Z</published>
+    <updated>2015-01-29T14:44:26.000Z</updated>
+    <content type="html"><![CDATA[<p>看了下，很多人都有写如何爬豆瓣，遂当做一个学习课题，写出来看看啊。本文主要分一下几个部分：</p>
+<blockquote>
+<p>分析豆瓣top页面，构建程序结构<br>依次写出代码<br>整理代码</p>
+</blockquote>
+<h1 id="分析豆瓣top页面，构建程序结构">分析豆瓣top页面，构建程序结构</h1>
+<p>1.首先打开网页<a href="http://movie.douban.com/top250?start，也就是top页面" target="_blank" rel="external">http://movie.douban.com/top250?start，也就是top页面</a><br>然后试着点击到top100的页面，注意带top100的链接依次为</p>
+<pre><code>http:<span class="comment">//movie.douban.com/top250?start=0</span>
+http:<span class="comment">//movie.douban.com/top250?start=25</span>
+http:<span class="comment">//movie.douban.com/top250?start=50</span>
+http:<span class="comment">//movie.douban.com/top250?start=75</span>
+</code></pre><p>2.然后通过查看源码，发现电影名的代码如下：</p>
+<pre><code><span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"title"</span>&gt;</span>肖申克的救赎<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+<span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"title"</span>&gt;</span>&amp;nbsp;/&amp;nbsp;The Shawshank Redemption<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+</code></pre><p>如图，因为有一些英文名等描述，通过正则抓取有些干扰，可能还需要后续过滤。</p>
+<p>根据以上信息，此程序主要分以下3个步骤：</p>
+<blockquote>
+<p>构建url地址池<br>抓取top100电影名称<br>依次打印输出</p>
+</blockquote>
+<h1 id="依次写出代码">依次写出代码</h1>
+<p>1.构建url地址池。代码如下：</p>
+<pre><code><span class="built_in">import</span> urllib2
+<span class="built_in">import</span> re
+<span class="comment"># ----------确定url地址池------------</span>
+<span class="variable">pre_url =</span> 'http://movie.douban.com/top250?<span class="variable">start=</span>'
+<span class="variable">top_urls =</span> []
+<span class="comment"># 因为top100，每页25部电影，故为4页,从零开始</span>
+for num <span class="keyword">in</span> range(<span class="number">4</span>):
+    top_urls.append(pre_url + str(num * <span class="number">25</span>))
+</code></pre><p>2.抓取top100电影名称</p>
+<pre><code><span class="comment"># ------------抓取top100电影名称----------</span>
+top_content = []
+top_tag = re.compile(<span class="string">r'&lt;span class="title"&gt;(.+?)&lt;/span&gt;'</span>)
+<span class="keyword">for</span> url <span class="keyword">in</span> top_urls:
+    content = urllib2.urlopen(url).read()
+    pre_content = re.findall(top_tag, content)
+    <span class="comment"># 过滤不符合条件的list，得到最后的top100的list</span>
+    <span class="keyword">for</span> item <span class="keyword">in</span> pre_content:
+        <span class="keyword">if</span> item.find(<span class="string">'&amp;nbsp'</span>) == -<span class="number">1</span>:
+            top_content.append(item)
+</code></pre><p>3.打印输出</p>
+<pre><code>top_num = <span class="number">1</span>
+<span class="keyword">for</span> <span class="keyword">item</span> <span class="operator">in</span> top_content:
+    print <span class="string">'Top'</span> + str(top_num) + <span class="string">'   '</span> + <span class="keyword">item</span>
+    top_num += <span class="number">1</span>
+</code></pre><h1 id="整理代码">整理代码</h1>
+<p>我还是python新手，还没有太多的pythonic思想，也没有代码优化技巧，只能说是整理。<br>其次，个人习惯，在简单的代码里面我还是喜欢少用函数，尽量不隐藏代码的逻辑。<br>以下代码请参考，并欢迎提意见，希望得到大家的意见，谢谢！<br>整理后的代码如下：</p>
+<pre><code><span class="comment"># coding=utf-8</span>
+<span class="string">'''
+本代码为自动抓取豆瓣top100电影代码
+@pre_url  url地址前缀，在这里为http://movie.douban.com/top250?start=
+@top_urls url地址池
+@top_tag  为抓取电影名正则表达式
+'''</span>
+
+<span class="keyword">import</span> urllib2
+<span class="keyword">import</span> re
+
+pre_url = <span class="string">'http://movie.douban.com/top250?start='</span>
+top_urls = []
+top_tag = re.compile(<span class="string">r'&lt;span class="title"&gt;(.+?)&lt;/span&gt;'</span>)
+top_content = []
+top_num = <span class="number">1</span>
+
+<span class="comment"># ----------确定url地址池------------</span>
+<span class="comment"># 因为top100，每页25部电影，故为4页,从零开始</span>
+<span class="keyword">for</span> num <span class="keyword">in</span> range(<span class="number">4</span>):
+    top_urls.append(pre_url + str(num * <span class="number">25</span>))
+
+
+<span class="comment"># ------------抓取top100电影名称，并打印输出----------</span>
+top_tag = re.compile(<span class="string">r'&lt;span class="title"&gt;(.+?)&lt;/span&gt;'</span>)
+<span class="keyword">for</span> url <span class="keyword">in</span> top_urls:
+    content = urllib2.urlopen(url).read()
+    pre_content = re.findall(top_tag, content)
+    <span class="comment"># 过滤并打印输出</span>
+    <span class="keyword">for</span> item <span class="keyword">in</span> pre_content:
+        <span class="keyword">if</span> item.find(<span class="string">'&amp;nbsp'</span>) == -<span class="number">1</span>:
+            <span class="keyword">print</span> <span class="string">'Top'</span> + str(top_num) + <span class="string">'   '</span> + item
+            top_num += <span class="number">1</span>
+</code></pre>]]></content>
+    <summary type="html">
+    <![CDATA[<p>看了下，很多人都有写如何爬豆瓣，遂当做一个学习课题，写出来看看啊。本文主要分一下几个部分：</p>
+<blockquote>
+<p>分析豆瓣top页面，构建程序结构<br>依次写出代码<br>整理代码</p>
+</blockquote>
+<h1 id="分析豆瓣top页面，]]>
+    </summary>
+    
+      <category term="python" scheme="http://blog.xiaolud.com/tags/python/"/>
+    
+      <category term="spider" scheme="http://blog.xiaolud.com/tags/spider/"/>
+    
+      <category term="douban" scheme="http://blog.xiaolud.com/tags/douban/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Python爬虫基础3-BeautifulSoup4]]></title>
+    <link href="http://blog.xiaolud.com/2015/01/24/splider-3rd-bs4/"/>
+    <id>http://blog.xiaolud.com/2015/01/24/splider-3rd-bs4/</id>
+    <published>2015-01-24T03:14:48.000Z</published>
+    <updated>2015-01-24T03:48:58.000Z</updated>
+    <content type="html"><![CDATA[<p>在前一节我们主要讲了如图抓取受限制网站,这一节将会介绍爬虫神兵利器BeautifulSoup4.<br>主要包含以下内容:</p>
+<blockquote>
+<p>安装BeautifulSoup4<br>小试牛刀<br>总结</p>
+</blockquote>
+<h1 id="1-安装BeautifulSoup4">1.安装<strong>BeautifulSoup4</strong></h1>
+<p>easy_install安装方式,easy_install需要提前安装</p>
+<pre><code><span class="title">easy_install</span> beautifulsoup4
+</code></pre><p>pip安装方式,pip也需要提前安装.此外PyPi中还有一个名字是 BeautifulSoup 的包,那是 Beautiful Soup3 的发布版本.在这里不建议安装.</p>
+<pre><code>pip <span class="operator"><span class="keyword">install</span> beautifulsoup4</span>
+</code></pre><p>Debain或ubuntu安装方式</p>
+<pre><code>apt-<span class="keyword">get</span> install Python-bs4
+</code></pre><p>你也可以通过源码安装,<a href="http://www.crummy.com/software/BeautifulSoup/bs4/download/4.0/" title="下载BS4源码" target="_blank" rel="external">下载BS4源码</a></p>
+<pre><code>Python setup.<span class="keyword">py</span> install
+</code></pre><h1 id="2-小试牛刀">2.小试牛刀</h1>
+<p>老样子,直接上代码</p>
+<pre><code><span class="comment"># coding=utf-8</span>
+<span class="string">'''
+@通过BeautifulSoup下载百度贴吧图片
+'''</span>
+<span class="keyword">import</span> urllib
+<span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup
+url = <span class="string">'http://tieba.baidu.com/p/3537654215'</span>
+
+<span class="comment"># 下载网页</span>
+html = urllib.urlopen(url)
+content = html.read()
+html.close()
+
+<span class="comment"># 使用BeautifulSoup匹配图片</span>
+html_soup = BeautifulSoup(content)
+<span class="comment"># 图片代码我们在[Python爬虫基础1--urllib]( http://blog.xiaolud.com/2015/01/22/spider-1st/ "Python爬虫基础1--urllib")里面已经分析过了</span>
+<span class="comment"># 相较通过正则表达式去匹配,BeautifulSoup提供了一个更简单灵活的方式</span>
+all_img_links = html_soup.findAll(<span class="string">'img'</span>, class_=<span class="string">'BDE_Image'</span>)
+
+<span class="comment"># 接下来就是老生常谈的下载图片</span>
+img_counter = <span class="number">1</span>
+<span class="keyword">for</span> img_link <span class="keyword">in</span> all_img_links:
+    img_name = <span class="string">'%s.jpg'</span> % img_counter
+    urllib.urlretrieve(img_link[<span class="string">'src'</span>], img_name)
+    img_counter += <span class="number">1</span>
+</code></pre><p>很简单,代码注释里面已经解释的很清楚了.BeautifulSoup提供了一个更简单灵活的方式,去分析网站源码,更快获取图片link.</p>
+<h1 id="3-总结">3.总结</h1>
+<pre><code>未完待续
+</code></pre>]]></content>
+    <summary type="html">
+    <![CDATA[<p>在前一节我们主要讲了如图抓取受限制网站,这一节将会介绍爬虫神兵利器BeautifulSoup4.<br>主要包含以下内容:</p>
+<blockquote>
+<p>安装BeautifulSoup4<br>小试牛刀<br>总结</p>
+</blockquote>
+<h1 id]]>
+    </summary>
+    
+      <category term="python" scheme="http://blog.xiaolud.com/tags/python/"/>
+    
+      <category term="spider" scheme="http://blog.xiaolud.com/tags/spider/"/>
+    
+      <category term="bs4" scheme="http://blog.xiaolud.com/tags/bs4/"/>
+    
+      <category term="BeautifulSoup4" scheme="http://blog.xiaolud.com/tags/BeautifulSoup4/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[Python爬虫基础2--urllib2]]></title>
-    <link href="http://blog.xiaolud.com/2015/01/23/spider-2nd/"/>
-    <id>http://blog.xiaolud.com/2015/01/23/spider-2nd/</id>
+    <link href="http://blog.xiaolud.com/2015/01/23/spider-2nd-urllib2/"/>
+    <id>http://blog.xiaolud.com/2015/01/23/spider-2nd-urllib2/</id>
     <published>2015-01-23T12:14:48.000Z</published>
     <updated>2015-01-23T15:37:37.000Z</updated>
     <content type="html"><![CDATA[<p>上一节我们讲解如何抓取网页和下载图片,在下一节里面我们会讲解如何抓取有限制抓取的网站<br>首先,我们依然用我们上一节课的方法去抓取一个大家都用来举例的网站<blog.cndn.net>,本文主要分以下几个部分:</blog.cndn.net></p>
@@ -141,8 +311,8 @@ content = urllib2.urlopen(req).read()
   
   <entry>
     <title><![CDATA[Python爬虫基础1--urllib]]></title>
-    <link href="http://blog.xiaolud.com/2015/01/22/spider-1st/"/>
-    <id>http://blog.xiaolud.com/2015/01/22/spider-1st/</id>
+    <link href="http://blog.xiaolud.com/2015/01/22/spider-1st-urllib/"/>
+    <id>http://blog.xiaolud.com/2015/01/22/spider-1st-urllib/</id>
     <published>2015-01-22T12:14:48.000Z</published>
     <updated>2015-01-23T15:37:16.000Z</updated>
     <content type="html"><![CDATA[<p>学习python完基础,有些迷茫.眼睛一闭,一种空白的窒息源源不断而来.还是缺少练习,遂拿爬虫来练练手.学习完斯巴达python爬虫课程后,将心得整理如下,供后续翻看.整篇笔记主要分以下几个部分:</p>
